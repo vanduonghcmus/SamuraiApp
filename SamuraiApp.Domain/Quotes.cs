@@ -2,11 +2,11 @@
 
 namespace SamuraiApp.Domain
 {
-    public class Quote
+    public partial class Quotes
     {
         public int Id { get; set; }
         public string Text { get; set; }
-        public Samurai Samurai { get; set; }
+        public virtual Samurais Samurai { get; set; }
         public int SamuraiId { get; set; }
 
     }
