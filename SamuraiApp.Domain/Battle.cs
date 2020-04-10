@@ -4,21 +4,19 @@ using System.Text;
 
 namespace SamuraiApp.Domain
 {
-    public partial class Samurais
+    public class Battle
     {
-        // Constructor
-        public Samurais()
+        //Constructor
+        public Battle()
         {
-            Quote = new List<Quotes>();
             SamuraiBattle = new List<SamuraiBattle>();
         }
         public int Id { get; set; }
         public string Name { get; set; }
-        public int? ClanId { get; set; }
-        public  List<Quotes> Quote { get; set; }
-        public  Clans Clan { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public List<SamuraiBattle> SamuraiBattle { get; set; }
-        public Horse Horse { get; set; }
 
     }
 }
+ 
