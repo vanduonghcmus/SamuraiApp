@@ -44,7 +44,12 @@ namespace ConsoleApp2
             //GetSamuraiWithHorse();
             //GetHorseWithSamurai();
             //GetSamuraiWithClan();
-            GetClanWithSamurai();
+            //GetClanWithSamurai();
+            //QuerySamuraiBattleStats();
+            //QueryUsingRawSql();
+            //QueryUsingRawSqlWithInterpolation();
+            //QueryUsingFromRawSqlStoreProc();
+            ExcuteSomeRawSql();
 
             Console.Write("Press any key...");
             Console.ReadKey();
@@ -132,7 +137,7 @@ namespace ConsoleApp2
         {
             _context.Battles.Add(new Battle
             {
-                Name="Battle of Royal",
+                Name="Battle of Luxury",
                 StartDate=new DateTime(1999,04,26),
                 EndDate=DateTime.Now
             });
@@ -299,8 +304,8 @@ namespace ConsoleApp2
             // Samurai and Battle already exist and we have their Id
             var sbJoin = new SamuraiBattle
             {
-                SamuraiId = 1,
-                BattleId = 1
+                SamuraiId = 2,
+                BattleId = 3
             };
             _context.Add(sbJoin);
             _context.SaveChanges();
@@ -378,6 +383,7 @@ namespace ConsoleApp2
         {
             var samurai = _context.Samurais.Include(x => x.Horse).Where(x=>x.Horse.Id!=null).ToList();
         }
+
         private static void GetHorseWithSamurai()
         {
             var horseWithoutSamurai = _context.Set<Horse>().Find(3);
@@ -403,6 +409,58 @@ namespace ConsoleApp2
             var clan = _context.Clans.Find(3);
             var samuraisForClan = _context.Samurais.Where(x => x.ClanId == 3).ToList();
         }
+
+        private static void QuerySamuraiBattleStats()
+        {
+            //var stats = _context.SamuraiBattleStats.ToList();
+            var firstStat = _context.SamuraiBattleStats.FirstOrDefault();
+            var royalStat = _context.SamuraiBattleStats.Where(x => x.Name.Contains("Dang")).FirstOrDefault();
+            var checkChange= _context.ChangeTracker.Entries();
+            var finedone = _context.SamuraiBattleStats.Find(2);// MAke no sence, because not Key value
+        }
+
+        private static void QueryUsingRawSql()
+        {
+            //var samurais=_context.Samurais.FromSqlRaw("select Name from Samurais").ToList();
+            // Sử dung sqlRaw phải lấy hết dữ liệu từ bảng
+            var samurai = _context.Samurais.FromSqlRaw(
+                "Select Id, Name, ClanId, HorseId from Samurais").Include(s => s.Quote).ToList();
+        }
+
+        private static void QueryUsingRawSqlWithInterpolation()
+        {
+            string name = "Samurai3";
+            // Không nên dùng theo cách này
+            //var samurais = _context.Samurais
+            //    .FromSqlRaw($"select * from Samurais where Name = '{name}'")
+            //    .ToList();
+
+            // Nên dùng theo
+            var samurais = _context.Samurais
+                .FromSqlInterpolated($"select * from Samurais where Name = {name}")
+                .ToList();
+        }
+
+        private static void QueryUsingFromRawSqlStoreProc()
+        {
+            var text = "Happy";
+            var samurais = _context.Samurais.FromSqlRaw("Exec dbo.SamuraisWhoSaidAWord {0}", text).ToList();
+        }
+
+        private static void ExcuteSomeRawSql()
+        {
+            //var samuraiId = 22;
+            //// ExcuteSqlRaw will return số row bị ảnh hưởng
+            //var x = _context.Database.ExecuteSqlRaw("Exec DeleteQuotesForSamurai {0}", samuraiId);
+
+
+            var samuraiId = 15;
+
+            _context.Database.ExecuteSqlInterpolated($"Exec DeleteQuotesForSamurai {samuraiId} ");
+           
+
+        }
+
 
     }
 
