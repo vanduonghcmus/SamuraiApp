@@ -18,5 +18,5 @@ namespace SamuraiApp.Domain
         public List<SamuraiBattle> SamuraiBattle { get; set; }
 
     }
-}
+}   
  
