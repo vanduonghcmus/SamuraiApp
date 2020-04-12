@@ -10,8 +10,8 @@ using SamuraiApp.Data;
 namespace SamuraiApp.Data.Migrations
 {
     [DbContext(typeof(SamuraiContext))]
-    [Migration("20200410143547_UpdateRelationships")]
-    partial class UpdateRelationships
+    [Migration("20200412095220_NewSprocs")]
+    partial class NewSprocs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -138,7 +138,7 @@ namespace SamuraiApp.Data.Migrations
             modelBuilder.Entity("SamuraiApp.Domain.Quotes", b =>
                 {
                     b.HasOne("SamuraiApp.Domain.Samurais", "Samurai")
-                        .WithMany("Quotes")
+                        .WithMany("Quote")
                         .HasForeignKey("SamuraiId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

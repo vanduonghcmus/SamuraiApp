@@ -136,7 +136,7 @@ namespace SamuraiApp.Data.Migrations
             modelBuilder.Entity("SamuraiApp.Domain.Quotes", b =>
                 {
                     b.HasOne("SamuraiApp.Domain.Samurais", "Samurai")
-                        .WithMany("Quotes")
+                        .WithMany("Quote")
                         .HasForeignKey("SamuraiId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

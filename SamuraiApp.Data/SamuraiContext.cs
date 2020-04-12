@@ -24,6 +24,7 @@ namespace SamuraiApp.Data
         public DbSet<Battle> Battles { get; set; }
         public DbSet<Horse> Horses { get; set; }
         public DbSet<SamuraiBattle> SamuraiBattles { get; set; }
+        public DbSet<SamuraiBattleStat> SamuraiBattleStats { get; set; }
 
         // Create a field called Console
         public static readonly ILoggerFactory ConsoleLoggerFactory
@@ -63,9 +64,11 @@ namespace SamuraiApp.Data
                 entity.HasKey(x => x.Id);
                 entity.ToTable("Horses");
             });
-
-
-
+            modelBuilder.Entity<SamuraiBattleStat>(entity =>
+            {
+                entity.HasNoKey().ToView("SamuraiBattleStats");
+            });
+            // we're not done yet though!
         }
     }
 }
