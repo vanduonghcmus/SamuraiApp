@@ -11,13 +11,13 @@ namespace SamuraiApp.Data
         {
 
         }
-        public class SamuraiContextNoTracking : DbContext
-        {
-            public SamuraiContextNoTracking()
-            {
-                ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            }
-        }
+        //public class SamuraiContextNoTracking : DbContext
+        //{
+        //    public SamuraiContextNoTracking()
+        //    {
+        //        ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        //    }
+        //}
         public virtual DbSet<Samurais> Samurais { get; set; }
         public virtual DbSet<Quotes> Quotes { get; set; }
         public virtual DbSet<Clans> Clans { get; set; }
